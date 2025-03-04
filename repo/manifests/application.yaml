@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-    name: nginx-orange
+    name: nginx-orange-helm
     namespace: argocd
 spec:
     project: default
     source:
         repoURL: 'https://github.com/sawantalwar85/argo1'
-        path: manifests
+        path: orange
         targetRevision: master
     destination:
         server: 'https://kubernetes.default.svc'
