@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: guestbook
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: blue
+        url: https://172.25.232.191:6443
+        revision: master  (instead of branch tag can be used e.g 1.0.0)
+      - cluster: green
+        url: https://172.25.232.76:6443
+        revision: master (instead of branch tag can be used e.g 1.0.1)
+  template:
+    metadata:
+      name: '{{cluster}}-onepageserver'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/Mudassir-dev0ps/argo1
+        targetRevision: '{{revision}}'
+        path: manifests
+      destination:
+        server: '{{url}}'
+        namespace: default
